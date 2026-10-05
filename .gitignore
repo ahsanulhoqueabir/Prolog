@@ -1,0 +1,60 @@
+# ============================================
+# .gitignore for the Prolog learning repository
+# ============================================
+
+# --- Tooling / editor state ---
+# Local Puku CLI tooling artifacts (per-agent state, caches, etc.)
+.puku-cli/
+
+# VS Code workspace settings that vary per-machine
+.vscode/.cache/
+.vscode/workspaceStorage/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor backups
+*~
+*.swp
+*.swo
+.vscode/settings.local.json
+
+# --- Prolog build artefacts ---
+# Compiled Prolog files
+*.qlf
+
+# Temporary files created by some Prolog systems
+*.tmp
+*.bak
+*.pl~
+
+# SWI-Prolog resource files (per-user, not source)
+.dot-swipl/
+.swi-prolog/
+.plrc
+.plrc.saved
+
+# --- LaTeX artefacts from lab6/Prolog_Lab6_Explained.tex ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+
+# Keep the PDF and TEX that are part of the project — DO NOT ignore them
+# (uncomment the line below to also exclude the PDF from version control)
+# lab6/Prolog_Lab6_Explained.pdf
+
+# --- Common log / temp directories ---
+*.log
+logs/
+tmp/
