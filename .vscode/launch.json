@@ -1,0 +1,71 @@
+{
+  // ----------------------------------------------------------------------
+  // VS Code debug launch configurations.
+  //
+  // NOTE: SWI-Prolog does NOT have a native DAP/VS Code debugger like
+  // C++ or Python.  The cleanest workflow is to use SWI-Prolog's
+  // built-in graphical tracer (gtrace) or command-line tracer
+  // (trace).  These configurations start SWI-Prolog with the right
+  // flags and a custom goal so you can step through predicates.
+  //
+  // How to use:
+  //   - Place a breakpoint in a .pl file (NOT used by SWI but visual cue)
+  //   - Press F5 or click Run > Start Debugging
+  //   - Edit "query" below to change the goal that runs.
+  // ----------------------------------------------------------------------
+  "version": "0.2.0",
+  "configurations": [
+
+    // Trace the current file with the built-in command-line tracer
+    {
+      "name": "SWI-Prolog: Trace current file (CLI tracer)",
+      "type": "node-terminal",
+      "request": "launch",
+      "terminal": "integrated",
+      "cwd": "${workspaceFolder}",
+      "command": "swipl",
+      "args": [
+        "-q",
+        "-f",
+        "${file}",
+        "-g",
+        "trace"
+      ],
+      "detail": "Opens SWI-Prolog with the command-line tracer active. Press 'c' to creep, 's' to skip, 'a' to abort."
+    },
+
+    // Trace the current file with the GRAPHICAL tracer (guitracer window)
+    {
+      "name": "SWI-Prolog: Trace current file (Graphical tracer)",
+      "type": "node-terminal",
+      "request": "launch",
+      "terminal": "integrated",
+      "cwd": "${workspaceFolder}",
+      "command": "swipl",
+      "args": [
+        "-q",
+        "-f",
+        "${file}",
+        "-g",
+        "guitracer"
+      ],
+      "detail": "Opens the SWI-Prolog graphical tracer window. Good for visual step-through."
+    },
+
+    // Just run the current file in the REPL
+    {
+      "name": "SWI-Prolog: Run current file (REPL)",
+      "type": "node-terminal",
+      "request": "launch",
+      "terminal": "integrated",
+      "cwd": "${workspaceFolder}",
+      "command": "swipl",
+      "args": [
+        "-q",
+        "-f",
+        "${file}"
+      ],
+      "detail": "Loads the current .pl file and opens the SWI-Prolog REPL."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  // ----------------------------------------------------------------------
+  // Recommended extensions for working with the .pl files in this folder.
+  // VS Code shows a "Recommended Extensions" popup the first time you
+  // open this folder. You can also install them manually:
+  //
+  //   - VFX-Prolog      : syntax highlighting + load/run + REPL
+  //   - SWI-Prolog (vscode-swi-prolog) : another good option
+  // ----------------------------------------------------------------------
+  "recommendations": [
+    "bramvanbilsen.vscode-prolog",
+    "arthurwang.vscode-swi-prolog"
+  ],
+  "unwantedRecommendations": []
+}

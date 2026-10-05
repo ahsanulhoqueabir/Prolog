@@ -1,0 +1,213 @@
+{
+  // ----------------------------------------------------------------------
+  // VS Code Tasks for SWI-Prolog
+  //
+  // How to use:
+  //   1. Open any  .pl  file (e.g. first.pl)
+  //   2. Press Ctrl+Shift+B   ->  default task: "SWI-Prolog: Run current file"
+  //      OR open the Terminal menu  > Run Task...   to see all options.
+  // ----------------------------------------------------------------------
+  "version": "2.0.0",
+
+  // Inputs shown in the "Run Task" picker so you can type a query
+  "inputs": [
+    {
+      "id": "prologQuery",
+      "type": "promptString",
+      "description": "Prolog query to run after loading the file (leave blank to just load the file)",
+      "default": ""
+    },
+    {
+      "id": "prologFile",
+      "type": "promptString",
+      "description": "Path to a .pl file (absolute or relative)",
+      "default": "${file}"
+    }
+  ],
+
+  "tasks": [
+    // ------------------------------------------------------------------
+    // 1. DEFAULT: Run the currently open .pl file in SWI-Prolog
+    //    Press  Ctrl+Shift+B   while a .pl file is open.
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Run current file",
+      "type": "shell",
+      "command": "swipl",
+      "args": [
+        "-q",
+        "-f",
+        "${file}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Opens an interactive SWI-Prolog REPL with the current .pl file loaded. You can now type queries like: father(john, X).",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+
+    // ------------------------------------------------------------------
+    // 2. Run a quick one-line query against the current file, then exit
+    //    (no interactive REPL).  Uses the PowerShell helper so the query
+    //    string is preserved verbatim (no cmd.exe paren-splitting).
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Run current file + query",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/prolog.ps1",
+        "-File", "${file}",
+        "-Query", "${input:prologQuery}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Loads the current .pl file and runs the query you provide, then exits."
+    },
+
+    // ------------------------------------------------------------------
+    // 3. Run a query against a file you choose (handy for the lab files)
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Run query on chosen file",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy", "Bypass",
+        "-File", "${workspaceFolder}/prolog.ps1",
+        "-File", "${input:prologFile}",
+        "-Query", "${input:prologQuery}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Loads a file you choose and runs a query you choose."
+    },
+
+    // ------------------------------------------------------------------
+    // 4. Load ALL .pl files under lab6\  then drop into the REPL
+    //    (uses -l so multiple files can be loaded at once)
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Load all lab6/*.pl files",
+      "type": "shell",
+      "command": "swipl",
+      "args": [
+        "-q",
+        "-l", "lab6/p01_factorial.pl",
+        "-l", "lab6/p02_sum_even.pl",
+        "-l", "lab6/p03_palindrome.pl",
+        "-l", "lab6/p04_max_list.pl",
+        "-l", "lab6/p05_list_length.pl",
+        "-l", "lab6/p06_reverse_list.pl",
+        "-l", "lab6/p07_ancestor_descendant.pl",
+        "-l", "lab6/p08_expression_evaluator.pl",
+        "-l", "lab6/p09_count_elem.pl",
+        "-l", "lab6/p10_find_siblings.pl",
+        "-l", "lab6/p11_nth_element.pl",
+        "-l", "lab6/p12_sorted.pl",
+        "-l", "lab6/p13_is_prime.pl",
+        "-l", "lab6/p14_fibonacci.pl",
+        "-l", "lab6/p15_uncle_aunt.pl"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Loads every Prolog lab file under lab6\\ and starts the REPL."
+    },
+
+    // ------------------------------------------------------------------
+    // 5. Open a SWI-Prolog REPL with nothing loaded
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Start REPL",
+      "type": "shell",
+      "command": "swipl",
+      "args": ["-q"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Starts a fresh SWI-Prolog REPL. Use consult('myfile.pl'). to load files from the prompt."
+    },
+
+    // ------------------------------------------------------------------
+    // 6. Syntax check the current file (good for catching typos)
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Syntax-check current file",
+      "type": "shell",
+      "command": "swipl",
+      "args": [
+        "-q",
+        "-f",
+        "${file}",
+        "-g",
+        "write('OK - syntax check passed'), nl",
+        "-t",
+        "halt"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Compiles the file to check for syntax errors without entering the REPL."
+    },
+
+    // ------------------------------------------------------------------
+    // 7. Show version
+    // ------------------------------------------------------------------
+    {
+      "label": "SWI-Prolog: Show version",
+      "type": "shell",
+      "command": "swipl",
+      "args": ["--version"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Prints the installed SWI-Prolog version."
+    }
+  ]
+}
